@@ -35,6 +35,29 @@ def first_missing_positive_better(nums: List[int]) -> int:
     return next((i + 1 for i, num in enumerate(nums) if num != i + 1), n + 1)
 
 
+def first_missing_positive_betterer(nums: List[int]) -> int:
+    n = len(nums)
+    # Discard elements we don't need to check (negative or larger than len)
+    for i in range(n):
+        if nums[i] < 1 or nums[i] > n:
+            nums[i] = 0
+
+    # Use the index as the hash to record the frequency of each number
+    for i in range(n):
+        if 1 <= nums[i] % (n + 1) <= n:
+            # The position it should belong
+            idx = nums[i] % (n + 1) - 1
+            nums[idx] += n + 1
+
+    for i in range(n):
+        if nums[i] <= n:
+            return i + 1
+
+    return n + 1
+
+
 if __name__ == "__main__":
-    print(first_missing_positive([-1, 1, 2, 4, 5]))
-    print(first_missing_positive_better([-1, 1, 2, 4, 5]))
+    arr = [-1, 1, 1, 4, 2, 2]
+    print(first_missing_positive(arr))
+    print(first_missing_positive_better(arr))
+    print(first_missing_positive_betterer(arr))
