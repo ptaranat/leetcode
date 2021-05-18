@@ -1,14 +1,11 @@
 def minFlipsMonoIncr(s: str) -> int:
     ones = flips = 0
     for bit in s:
-        if bit == "0":
-            if ones == 0:
-                continue
-            flips += 1
-        else:
+        if bit == "1":
             ones += 1
-        if ones < flips:
-            flips = ones
+        else:
+            flips += 1
+        flips = flips if flips < ones else ones
     return flips
 
 
@@ -18,4 +15,4 @@ if __name__ == "__main__":
     for input, want in zip(test_cases, expected):
         got = minFlipsMonoIncr(input)
         assert got == want
-        print(f"input: {input}\tgot {got} want {want}")
+        print(f"got {got} want {want}")
